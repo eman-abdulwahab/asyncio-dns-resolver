@@ -107,7 +107,7 @@ async def get_dns_records_async(domain_name, selectors=None):
             elif '_domainkey' in qname:
 
                 record = {
-                    "selector": qname.split('.')[0],
+                    "selector": qname.split('._domainkey')[0],
                     "records": []
                 }
                 for dkim in a:
