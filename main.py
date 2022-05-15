@@ -1,7 +1,5 @@
 import asyncio
 import logging
-from typing import Tuple
-
 import dns.resolver
 import dns.rrset
 from dns.asyncresolver import Resolver
@@ -94,7 +92,8 @@ async def get_dns_records_async(domain_name, selectors=None):
     res = await asyncio.gather(*coros, return_exceptions=True)
     for i, a in enumerate(res):
         if isinstance(a, Exception):
-            logging.debug(f" [!!!] Error: Result {i} is an exception! Original query: {queries[i]} || Exception is: {type(a)} - {a!s} \n")
+            logging.debug(
+                f" [!!!] Error: Result {i} is an exception! Original query: {queries[i]} || Exception is: {type(a)} - {a!s} \n")
             continue
 
         rt = queries[i][1]
@@ -136,7 +135,6 @@ async def main():
         res = await get_dns_records_async(domain)
         print(f'----------- Result for  {domain} ------------')
         print(res)
-
 
 
 if __name__ == '__main__':
