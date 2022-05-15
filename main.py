@@ -131,7 +131,7 @@ async def get_dns_records_async(domain_name, selectors=None):
 
 
 async def main():
-    domains = ['edxlabs.com', 'ctm360.com', 'nbk.com', 'gib.com', 'dmarc360.com']
+    domains = ['example.com', 'google.com']
     for domain in domains:
         res = await get_dns_records_async(domain)
         print(f'----------- Result for  {domain} ------------')
