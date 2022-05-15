@@ -2,6 +2,7 @@ import asyncio
 import logging
 import dns.resolver
 import dns.rrset
+from typing import Tuple
 from dns.asyncresolver import Resolver
 
 
