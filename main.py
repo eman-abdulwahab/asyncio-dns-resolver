@@ -1,10 +1,10 @@
 import asyncio
 import logging
-from dns.asyncresolver import Resolver
+from typing import Tuple
+
 import dns.resolver
 import dns.rrset
-import asyncio
-from typing import Tuple
+from dns.asyncresolver import Resolver
 
 
 async def dns_query(domain: str, rtype: str = 'A', **kwargs):
