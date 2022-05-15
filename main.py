@@ -5,6 +5,8 @@ import dns.rrset
 from typing import Tuple
 from dns.asyncresolver import Resolver
 
+logging.basicConfig(filename='exceptions.log', encoding='utf-8', level=logging.DEBUG)
+
 
 async def dns_query(domain: str, rtype: str = 'A', **kwargs):
     # create an asyncio Resolver instance
@@ -90,7 +92,16 @@ async def get_dns_records_async(domain_name, selectors=None):
         "DKIM_records": []
     }
 
-    res = await asyncio.gather(*coros, return_exceptions=True)
+    try:
+        res = await asyncio.wait_for(
+                asyncio.gather(*coros, return_exceptions=True),
+                timeout=60,
+            )
+    except asyncio.exceptions.TimeoutError:
+        logging.debug(
+            f" [!!!] Timeout Error: Given domain is either parked or invalid \n")
+        return result
+
     for i, a in enumerate(res):
         if isinstance(a, Exception):
             logging.debug(
@@ -134,7 +145,7 @@ async def main():
     domains = ['example.com', 'google.com']
     for domain in domains:
         res = await get_dns_records_async(domain)
-        print(f'----------- Result for  {domain} ------------')
+        print(f'----------- Result for {domain} ------------')
         print(res)
 
 
